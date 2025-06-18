@@ -1,7 +1,7 @@
 import User from "../models/userModel.js";
 import { generateOTP } from "../utils/otpGenerator.js";
 import { sendOTP } from "../config/nodemailer.js";
-import { generateToken } from "../utils/token.js";
+import { generateEmployerToken } from "../utils/token.js";
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -40,7 +40,6 @@ export const requestOTP = async (req, res) => {
   }
 };
 
-
 export const verifyOTP = async (req, res) => {
   try {
     const { email, otp } = req.body;
@@ -54,7 +53,7 @@ export const verifyOTP = async (req, res) => {
     user.otp = null;
     await user.save();
 
-    const token = generateToken({ id: user._id });
+    const token = generateEmployerToken(user); // ✅ role included in token
 
     res.status(200).json({
       message: "OTP verified",
@@ -69,7 +68,6 @@ export const verifyOTP = async (req, res) => {
     res.status(500).json({ message: "OTP verification failed", error: error.message });
   }
 };
-
 export const googleLogin = async (req, res) => {
   try {
     const { token, role } = req.body;
@@ -89,15 +87,15 @@ export const googleLogin = async (req, res) => {
         email,
         loginType: "google",
         isVerified: true,
-        role: role || null,
+        role: role || "employer", // fallback
       });
     } else if (!user.role && role) {
-      user.role = role; 
+      user.role = role;
     }
 
     await user.save();
 
-    const jwtToken = generateToken({ id: user._id });
+    const jwtToken = generateEmployerToken(user); // ✅ using your utility
 
     res.status(200).json({
       message: "Google login successful",
@@ -109,7 +107,10 @@ export const googleLogin = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(400).json({ message: "Google login failed", error: error.message });
+    res.status(400).json({
+      message: "Google login failed",
+      error: error.message,
+    });
   }
 };
 // in controllers/userController.js

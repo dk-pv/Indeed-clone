@@ -1,7 +1,10 @@
+
+
+
 // import { useState, useEffect } from "react";
 // import { ChevronDown, ExternalLink, LogOut, Check, Link } from "lucide-react";
 // import jobpostImg4 from "../assets/jobpost4.png";
-
+// import { useNavigate } from "react-router-dom";
 
 // export default function IndeedEmployerPage() {
 //   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -10,6 +13,7 @@
 //   const [selectedBenefits, setSelectedBenefits] = useState([]);
 //   const [showMoreBenefits, setShowMoreBenefits] = useState(false);
 //   const [payRange, setPayRange] = useState({ min: '', max: '' });
+//   const navigate = useNavigate();
 
 //   useEffect(() => {
 //     const user = JSON.parse(localStorage.getItem("user"));
@@ -21,16 +25,16 @@
 //   };
 
 //   const toggleSupplementalPay = (item) => {
-//     setSelectedSupplementalPay(prev => 
-//       prev.includes(item) 
+//     setSelectedSupplementalPay(prev =>
+//       prev.includes(item)
 //         ? prev.filter(i => i !== item)
 //         : [...prev, item]
 //     );
 //   };
 
 //   const toggleBenefit = (item) => {
-//     setSelectedBenefits(prev => 
-//       prev.includes(item) 
+//     setSelectedBenefits(prev =>
+//       prev.includes(item)
 //         ? prev.filter(i => i !== item)
 //         : [...prev, item]
 //     );
@@ -51,12 +55,12 @@
 //       selectedBenefits
 //     };
 //     console.log('Form Data:', formData);
-//     // Handle form submission here
+//     navigate("/addJobDetails5");
 //   };
 
 //   const supplementalPayOptions = [
 //     'Performance bonus',
-//     'Yearly bonus', 
+//     'Yearly bonus',
 //     'Commission pay',
 //     'Overtime pay',
 //     'Quarterly bonus',
@@ -139,22 +143,21 @@
 //       </nav>
 
 //       {/* Header Image */}
-//        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
-//               <img
-//                 src={jobpostImg4}
-//                 alt="Job post"
-//                 className="w-[800px] h-[250px] object-contain mx-auto"
-//               />
-//             </div>
-      
+//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+//         <img
+//           src={jobpostImg4}
+//           alt="Job post"
+//           className="w-[800px] h-[250px] object-contain mx-auto"
+//         />
+//       </div>
 
 //       {/* Form */}
 //       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-//         <div onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+//         <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
 //           {/* Pay Section */}
 //           <div className="mb-12">
 //             <h2 className="text-2xl font-semibold text-gray-900 mb-8">Pay</h2>
-            
+
 //             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 //               <div>
 //                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -172,7 +175,7 @@
 //                 </div>
 //                 <span className="text-sm text-gray-500 mt-1">per month to</span>
 //               </div>
-              
+
 //               <div>
 //                 <label className="block text-sm font-medium text-gray-700 mb-2">
 //                   Amount
@@ -195,7 +198,7 @@
 //           {/* Supplemental Pay Section */}
 //           <div className="mb-12">
 //             <h2 className="text-2xl font-semibold text-gray-900 mb-6">Supplemental Pay</h2>
-            
+
 //             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 //               {supplementalPayOptions.map((option) => (
 //                 <button
@@ -220,7 +223,7 @@
 //           {/* Benefits Section */}
 //           <div className="mb-12">
 //             <h2 className="text-2xl font-semibold text-gray-900 mb-6">Benefits</h2>
-            
+
 //             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 //               {benefitOptions.slice(0, showMoreBenefits ? benefitOptions.length : 8).map((option) => (
 //                 <button
@@ -240,7 +243,7 @@
 //                 </button>
 //               ))}
 //             </div>
-            
+
 //             {benefitOptions.length > 8 && (
 //               <div className="mt-4">
 //                 <button
@@ -264,8 +267,7 @@
 //               <span className="mr-2">←</span>
 //               Back
 //             </button>
-//             <Link>
-//             </Link>
+//             <Link />
 //             <button
 //               type="submit"
 //               className="flex items-center px-8 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
@@ -284,7 +286,7 @@
 //               </a>
 //             </p>
 //           </div>
-//         </div>
+//         </form>
 //       </div>
 
 //       {isDropdownOpen && (
@@ -297,9 +299,8 @@
 //   );
 // }
 
-
 import { useState, useEffect } from "react";
-import { ChevronDown, ExternalLink, LogOut, Check, Link } from "lucide-react";
+import { ChevronDown, ExternalLink, LogOut, Check } from "lucide-react";
 import jobpostImg4 from "../assets/jobpost4.png";
 import { useNavigate } from "react-router-dom";
 
@@ -309,7 +310,7 @@ export default function IndeedEmployerPage() {
   const [selectedSupplementalPay, setSelectedSupplementalPay] = useState([]);
   const [selectedBenefits, setSelectedBenefits] = useState([]);
   const [showMoreBenefits, setShowMoreBenefits] = useState(false);
-  const [payRange, setPayRange] = useState({ min: '', max: '' });
+  const [payRange, setPayRange] = useState({ min: "", max: "" });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -322,63 +323,68 @@ export default function IndeedEmployerPage() {
   };
 
   const toggleSupplementalPay = (item) => {
-    setSelectedSupplementalPay(prev =>
-      prev.includes(item)
-        ? prev.filter(i => i !== item)
-        : [...prev, item]
+    setSelectedSupplementalPay((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
     );
   };
 
   const toggleBenefit = (item) => {
-    setSelectedBenefits(prev =>
-      prev.includes(item)
-        ? prev.filter(i => i !== item)
-        : [...prev, item]
+    setSelectedBenefits((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
     );
   };
 
   const handlePayChange = (field, value) => {
-    setPayRange(prev => ({
+    setPayRange((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!payRange.min || !payRange.max) {
+      alert("Please fill in both minimum and maximum amount.");
+      return;
+    }
+
     const formData = {
       payRange,
       selectedSupplementalPay,
-      selectedBenefits
+      selectedBenefits,
     };
-    console.log('Form Data:', formData);
+
+    localStorage.setItem("jobFormStep4", JSON.stringify(formData));
+
+    console.log("Form Data:", formData);
     navigate("/addJobDetails5");
   };
 
   const supplementalPayOptions = [
-    'Performance bonus',
-    'Yearly bonus',
-    'Commission pay',
-    'Overtime pay',
-    'Quarterly bonus',
-    'Shift allowance',
-    'Joining bonus',
-    'Other'
+    "Performance bonus",
+    "Yearly bonus",
+    "Commission pay",
+    "Overtime pay",
+    "Quarterly bonus",
+    "Shift allowance",
+    "Joining bonus",
+    "Other",
   ];
 
   const benefitOptions = [
-    'Health insurance',
-    'Provident Fund',
-    'Cell phone reimbursement',
-    'Paid sick time',
-    'Work from home',
-    'Paid time off',
-    'Food provided',
-    'Life insurance',
-    'Dental insurance',
-    'Flexible schedule',
-    'Employee discount',
-    'Retirement plan'
+    "Health insurance",
+    "Provident Fund",
+    "Cell phone reimbursement",
+    "Paid sick time",
+    "Work from home",
+    "Paid time off",
+    "Food provided",
+    "Life insurance",
+    "Dental insurance",
+    "Flexible schedule",
+    "Employee discount",
+    "Retirement plan",
   ];
 
   return (
@@ -450,7 +456,10 @@ export default function IndeedEmployerPage() {
 
       {/* Form */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-lg shadow-sm border border-gray-200 p-8"
+        >
           {/* Pay Section */}
           <div className="mb-12">
             <h2 className="text-2xl font-semibold text-gray-900 mb-8">Pay</h2>
@@ -461,11 +470,13 @@ export default function IndeedEmployerPage() {
                   Amount
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                    ₹
+                  </span>
                   <input
                     type="text"
                     value={payRange.min}
-                    onChange={(e) => handlePayChange('min', e.target.value)}
+                    onChange={(e) => handlePayChange("min", e.target.value)}
                     className="w-full pl-8 pr-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Minimum amount"
                   />
@@ -478,11 +489,13 @@ export default function IndeedEmployerPage() {
                   Amount
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                    ₹
+                  </span>
                   <input
                     type="text"
                     value={payRange.max}
-                    onChange={(e) => handlePayChange('max', e.target.value)}
+                    onChange={(e) => handlePayChange("max", e.target.value)}
                     className="w-full pl-8 pr-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Maximum amount"
                   />
@@ -494,7 +507,9 @@ export default function IndeedEmployerPage() {
 
           {/* Supplemental Pay Section */}
           <div className="mb-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Supplemental Pay</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+              Supplemental Pay
+            </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {supplementalPayOptions.map((option) => (
@@ -504,12 +519,16 @@ export default function IndeedEmployerPage() {
                   onClick={() => toggleSupplementalPay(option)}
                   className={`flex items-center justify-center px-4 py-3 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
                     selectedSupplementalPay.includes(option)
-                      ? 'bg-blue-50 border-blue-300 text-blue-700'
-                      : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100'
+                      ? "bg-blue-50 border-blue-300 text-blue-700"
+                      : "bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100"
                   }`}
                 >
                   <span className="mr-2 text-lg font-light">
-                    {selectedSupplementalPay.includes(option) ? <Check className="w-4 h-4" /> : '+'}
+                    {selectedSupplementalPay.includes(option) ? (
+                      <Check className="w-4 h-4" />
+                    ) : (
+                      "+"
+                    )}
                   </span>
                   {option}
                 </button>
@@ -519,26 +538,34 @@ export default function IndeedEmployerPage() {
 
           {/* Benefits Section */}
           <div className="mb-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Benefits</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+              Benefits
+            </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {benefitOptions.slice(0, showMoreBenefits ? benefitOptions.length : 8).map((option) => (
-                <button
-                  key={option}
-                  type="button"
-                  onClick={() => toggleBenefit(option)}
-                  className={`flex items-center justify-center px-4 py-3 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                    selectedBenefits.includes(option)
-                      ? 'bg-blue-50 border-blue-300 text-blue-700'
-                      : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  <span className="mr-2 text-lg font-light">
-                    {selectedBenefits.includes(option) ? <Check className="w-4 h-4" /> : '+'}
-                  </span>
-                  {option}
-                </button>
-              ))}
+              {benefitOptions
+                .slice(0, showMoreBenefits ? benefitOptions.length : 8)
+                .map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => toggleBenefit(option)}
+                    className={`flex items-center justify-center px-4 py-3 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
+                      selectedBenefits.includes(option)
+                        ? "bg-blue-50 border-blue-300 text-blue-700"
+                        : "bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    <span className="mr-2 text-lg font-light">
+                      {selectedBenefits.includes(option) ? (
+                        <Check className="w-4 h-4" />
+                      ) : (
+                        "+"
+                      )}
+                    </span>
+                    {option}
+                  </button>
+                ))}
             </div>
 
             {benefitOptions.length > 8 && (
@@ -548,8 +575,14 @@ export default function IndeedEmployerPage() {
                   onClick={() => setShowMoreBenefits(!showMoreBenefits)}
                   className="flex items-center text-blue-600 hover:text-blue-800 text-sm font-medium"
                 >
-                  {showMoreBenefits ? 'Show less' : `Show ${benefitOptions.length - 8} more`}
-                  <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${showMoreBenefits ? 'rotate-180' : ''}`} />
+                  {showMoreBenefits
+                    ? "Show less"
+                    : `Show ${benefitOptions.length - 8} more`}
+                  <ChevronDown
+                    className={`w-4 h-4 ml-1 transition-transform ${
+                      showMoreBenefits ? "rotate-180" : ""
+                    }`}
+                  />
                 </button>
               </div>
             )}
@@ -564,7 +597,6 @@ export default function IndeedEmployerPage() {
               <span className="mr-2">←</span>
               Back
             </button>
-            <Link />
             <button
               type="submit"
               className="flex items-center px-8 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
@@ -577,7 +609,7 @@ export default function IndeedEmployerPage() {
           {/* Feedback Link */}
           <div className="text-center mt-8 pt-4 border-t border-gray-100">
             <p className="text-sm text-gray-500">
-              Have feedback?{' '}
+              Have feedback?{" "}
               <a href="#" className="text-blue-600 hover:text-blue-800">
                 Tell us more.
               </a>
