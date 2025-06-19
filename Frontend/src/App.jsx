@@ -8,6 +8,7 @@ import CompanyReview from "./pages/companyReview";
 import EmployerHome from "./pages/EmployerHome";
 import Jobpost from "./pages/Jobpost";
 import JobPostSuccessPage from './pages/JobPostSuccessPage'
+import CombinedEmployerPage from "./components/employer/CombinedEmployerPage";
 
 const router = createBrowserRouter([
 
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
     path:"/success",
     element:<JobPostSuccessPage />
   },
+  {
+    path:'/create-job-postt',
+    element:<CombinedEmployerPage/>
+  }
 ]);
 
 const App = () => {

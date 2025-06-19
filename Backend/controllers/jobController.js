@@ -1,9 +1,7 @@
 import Job from '../models/jobModel.js';
 import asyncHandler from 'express-async-handler';
 
-// @desc    Create a new job post
-// @route   POST /api/jobs
-// @access  Private (Employer)
+
 export const createJob = asyncHandler(async (req, res) => {
   const {
     company,
@@ -55,10 +53,8 @@ export const createJob = asyncHandler(async (req, res) => {
 });
 
 
-// @desc    Get all jobs
-// @route   GET /api/jobs
-// @access  Public
-export const getJobs = asyncHandler(async (req, res) => {
+
+export const getAllJobs = asyncHandler(async (req, res) => {
   const jobs = await Job.find({ status: 'published' })
     .populate('employer', 'name email companyName')
     .sort('-createdAt');
@@ -70,10 +66,9 @@ export const getJobs = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Get single job
-// @route   GET /api/jobs/:id
-// @access  Public
-export const getJob = asyncHandler(async (req, res) => {
+
+
+export const getAJob = asyncHandler(async (req, res) => {
   const job = await Job.findById(req.params.id)
     .populate('employer', 'name email companyName');
 

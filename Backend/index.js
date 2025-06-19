@@ -6,9 +6,9 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import jobRoutes from './routes/jobRoutes.js'
-
+import errorHandler from './middleware/errorHandler.js';
 connectDB();
-
+app.use(errorHandler);
 const app = express();
 
 console.log("EMAIL_USER:", process.env.EMAIL_USER); 
