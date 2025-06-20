@@ -8,8 +8,8 @@ import authRoutes from "./routes/authRoutes.js";
 import jobRoutes from './routes/jobRoutes.js'
 import errorHandler from './middleware/errorHandler.js';
 connectDB();
-app.use(errorHandler);
 const app = express();
+app.use(errorHandler);
 
 console.log("EMAIL_USER:", process.env.EMAIL_USER); 
 app.use(cors({
