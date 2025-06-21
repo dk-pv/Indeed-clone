@@ -160,7 +160,6 @@
 // const Job = mongoose.model("Job", jobSchema);
 // export default Job;
 
-
 import mongoose from "mongoose";
 
 const jobSchema = new mongoose.Schema({
@@ -177,17 +176,17 @@ const jobSchema = new mongoose.Schema({
     referralSource: {
       type: String,
       enum: [
-        "online video",
+        "online_video",
         "mail",
-        "streaming audio (ex. spotify, pandora)",
+        "streaming_audio",
         "tv",
-        "word of mouth",
-        "search engine (ex. google, bing, yahoo)",
+        "word_of_mouth",
+        "search_engine",
         "newspaper",
-        "radio (am/fm/xm)",
+        "radio",
         "billboard",
         "podcast",
-        "social media",
+        "social_media",
         "other",
       ],
     },
@@ -244,7 +243,7 @@ const jobSchema = new mongoose.Schema({
   recruitmentTimeline: {
     type: String,
     enum: ["Immediate", "1-2 weeks", "2-4 weeks", "1-2 months", "Flexible"],
-    required : true
+    required: true,
   },
 
   payRange: {
