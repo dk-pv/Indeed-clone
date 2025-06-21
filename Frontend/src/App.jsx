@@ -6,7 +6,7 @@ import SingleEntryAuth from "./pages/SingleEntryAuth";
 import RoleSelection from "./pages/RoleSelection";
 import CompanyReview from "./pages/companyReview";
 import EmployerHome from "./pages/EmployerHome";
-import Jobpost from "./pages/Jobpost";
+// import Jobpost from "./pages/Jobpost";
 import JobPostSuccessPage from './pages/JobPostSuccessPage'
 import CombinedEmployerPage from "./components/employer/CombinedEmployerPage";
 
@@ -47,15 +47,11 @@ const router = createBrowserRouter([
     element: <SingleEntryAuth />,
   },
   {
-    path: "/create-job-post",
-    element: <Jobpost />,
-  },
-  {
     path:"/success",
     element:<JobPostSuccessPage />
   },
   {
-    path:'/create-job-postt',
+    path: "/create-job-post",
     element:<CombinedEmployerPage/>
   }
 ]);

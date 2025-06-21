@@ -2,36 +2,26 @@ import User from "../models/userModel.js";
 import { generateOTP } from "../utils/otpGenerator.js";
 import { sendOTP } from "../config/nodemailer.js";
 import { generateEmployerToken } from "../utils/token.js";
+import { tempUserStorage } from "../utils/tempUserStorage.js";
 import dotenv from 'dotenv';
 dotenv.config();
 
 import { OAuth2Client } from "google-auth-library";
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID); 
 
+
 export const requestOTP = async (req, res) => {
   try {
     const { email, role } = req.body;
 
-    const otp = generateOTP();
-
-    let user = await User.findOne({ email });
-
-    if (user) {
-      user.otp = otp;
-      user.loginType = "email";
-      if (!user.role && role) {
-        user.role = role;
-      }
-    } else {
-      user = new User({
-        email,
-        otp,
-        loginType: "email",
-        role: role || null,
-      });
+    const existingUser = await User.findOne({ email, isVerified: true });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists and verified" });
     }
 
-    await user.save();
+    const otp = generateOTP();
+    tempUserStorage[email] = { otp, role };
+
     await sendOTP(email, otp);
 
     res.status(200).json({ message: "OTP sent to email" });
@@ -40,23 +30,32 @@ export const requestOTP = async (req, res) => {
   }
 };
 
+
 export const verifyOTP = async (req, res) => {
   try {
     const { email, otp } = req.body;
 
-    const user = await User.findOne({ email });
-    if (!user || user.otp !== otp) {
-      return res.status(400).json({ message: "Invalid OTP" });
+    const tempData = tempUserStorage[email];
+
+    if (!tempData || tempData.otp !== otp) {
+      return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
-    user.isVerified = true;
-    user.otp = null;
-    await user.save();
+    // ✅ Save user in DB now
+    const user = await User.create({
+      email,
+      isVerified: true,
+      loginType: "email",
+      role: tempData.role || null,
+    });
 
-    const token = generateEmployerToken(user); // ✅ role included in token
+    // Remove from temp store
+    delete tempUserStorage[email];
+
+    const token = generateEmployerToken(user);
 
     res.status(200).json({
-      message: "OTP verified",
+      message: "OTP verified, user created",
       token,
       user: {
         id: user._id,
@@ -68,6 +67,7 @@ export const verifyOTP = async (req, res) => {
     res.status(500).json({ message: "OTP verification failed", error: error.message });
   }
 };
+
 export const googleLogin = async (req, res) => {
   try {
     const { token, role } = req.body;
