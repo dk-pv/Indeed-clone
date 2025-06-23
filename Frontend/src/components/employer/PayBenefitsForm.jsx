@@ -1,221 +1,3 @@
-// // PayBenefitsForm.jsx
-// import { ChevronDown, Check } from "lucide-react";
-// import { useState } from "react";
-
-// const supplementalPayOptions = [
-//   "Performance bonus",
-//   "Yearly bonus",
-//   "Commission pay",
-//   "Overtime pay",
-//   "Quarterly bonus",
-//   "Shift allowance",
-//   "Joining bonus",
-//   "Other",
-// ];
-
-// const benefitOptions = [
-//   "Health insurance",
-//   "Provident Fund",
-//   "Cell phone reimbursement",
-//   "Paid sick time",
-//   "Work from home",
-//   "Paid time off",
-//   "Food provided",
-//   "Life insurance",
-//   "Dental insurance",
-//   "Flexible schedule",
-//   "Employee discount",
-//   "Retirement plan",
-// ];
-
-// export default function PayBenefitsForm({
-//   register,
-//   errors,
-//   handleSubmit,
-//   formData,
-//   setValue,
-//   getValues,
-//   onSubmit,
-//   setActiveForm,
-// }) {
-//   const [showMoreBenefits, setShowMoreBenefits] = useState(false);
-
-//   const toggleSupplementalPay = (item) => {
-//     const currentPay = getValues("supplementalPay");
-//     const newPay = currentPay.includes(item)
-//       ? currentPay.filter((i) => i !== item)
-//       : [...currentPay, item];
-//     setValue("supplementalPay", newPay);
-//   };
-
-//   const toggleBenefit = (item) => {
-//     const currentBenefits = getValues("benefits");
-//     const newBenefits = currentBenefits.includes(item)
-//       ? currentBenefits.filter((i) => i !== item)
-//       : [...currentBenefits, item];
-//     setValue("benefits", newBenefits);
-//   };
-
-//   const visibleBenefits = showMoreBenefits
-//     ? benefitOptions
-//     : benefitOptions.slice(0, 8);
-
-//   return (
-//     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-//       <form
-//         onSubmit={handleSubmit(onSubmit)}
-//         className="bg-white rounded-lg shadow-sm border border-gray-200 p-8"
-//       >
-//         {/* Pay Section */}
-//         <div className="mb-12">
-//           <h2 className="text-2xl font-semibold text-gray-900 mb-8">Pay</h2>
-
-//           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-//             <div>
-//               <label className="block text-sm font-medium text-gray-700 mb-2">
-//                 Amount
-//               </label>
-//               <div className="relative">
-//                 <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-//                   ₹
-//                 </span>
-//                 <input
-//                   type="text"
-//                   value={formData.payRange.min}
-//                   onChange={(e) => setValue("payRange.min", e.target.value)}
-//                   className="w-full pl-8 pr-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-//                   placeholder="Minimum amount"
-//                 />
-//               </div>
-//               <span className="text-sm text-gray-500 mt-1">per month to</span>
-//             </div>
-
-//             <div>
-//               <label className="block text-sm font-medium text-gray-700 mb-2">
-//                 Amount
-//               </label>
-//               <div className="relative">
-//                 <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-//                   ₹
-//                 </span>
-//                 <input
-//                   type="text"
-//                   value={formData.payRange.max}
-//                   onChange={(e) => setValue("payRange.max", e.target.value)}
-//                   className="w-full pl-8 pr-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-//                   placeholder="Maximum amount"
-//                 />
-//               </div>
-//               <span className="text-sm text-gray-500 mt-1">per month</span>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Supplemental Pay Section */}
-//         <div className="mb-12">
-//           <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-//             Supplemental Pay
-//           </h2>
-
-//           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-//             {supplementalPayOptions.map((option) => (
-//               <button
-//                 key={option}
-//                 type="button"
-//                 onClick={() => toggleSupplementalPay(option)}
-//                 className={`flex items-center justify-center px-4 py-3 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-//                   formData.supplementalPay.includes(option)
-//                     ? "bg-blue-50 border-blue-300 text-blue-700"
-//                     : "bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100"
-//                 }`}
-//               >
-//                 <span className="mr-2 text-lg font-light">
-//                   {formData.supplementalPay.includes(option) ? (
-//                     <Check className="w-4 h-4" />
-//                   ) : (
-//                     "+"
-//                   )}
-//                 </span>
-//                 {option}
-//               </button>
-//             ))}
-//           </div>
-//         </div>
-
-//         {/* Benefits Section */}
-//         <div className="mb-12">
-//           <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-//             Benefits
-//           </h2>
-
-//           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-//             {visibleBenefits.map((option) => (
-//               <button
-//                 key={option}
-//                 type="button"
-//                 onClick={() => toggleBenefit(option)}
-//                 className={`flex items-center justify-center px-4 py-3 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-//                   formData.benefits.includes(option)
-//                     ? "bg-blue-50 border-blue-300 text-blue-700"
-//                     : "bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100"
-//                 }`}
-//               >
-//                 <span className="mr-2 text-lg font-light">
-//                   {formData.benefits.includes(option) ? (
-//                     <Check className="w-4 h-4" />
-//                   ) : (
-//                     "+"
-//                   )}
-//                 </span>
-//                 {option}
-//               </button>
-//             ))}
-//           </div>
-
-//           {benefitOptions.length > 8 && (
-//             <div className="mt-4">
-//               <button
-//                 type="button"
-//                 onClick={() => setShowMoreBenefits(!showMoreBenefits)}
-//                 className="flex items-center text-blue-600 hover:text-blue-800 text-sm font-medium"
-//               >
-//                 {showMoreBenefits
-//                   ? "Show less"
-//                   : `Show ${benefitOptions.length - 8} more`}
-//                 <ChevronDown
-//                   className={`w-4 h-4 ml-1 transition-transform ${
-//                     showMoreBenefits ? "rotate-180" : ""
-//                   }`}
-//                 />
-//               </button>
-//             </div>
-//           )}
-//         </div>
-
-//         {/* Action Buttons */}
-//         <div className="flex justify-between items-center pt-8 border-t border-gray-200">
-//           <button
-//             type="button"
-//             onClick={() => setActiveForm("details")}
-//             className="flex items-center px-6 py-3 text-gray-700 hover:text-gray-900 focus:outline-none"
-//           >
-//             <span className="mr-2">←</span>
-//             Back
-//           </button>
-//           <button
-//             type="submit"
-//             className="flex items-center px-8 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-//           >
-//             Continue
-//             <span className="ml-2">→</span>
-//           </button>
-//         </div>
-//       </form>
-//     </div>
-//   );
-// }
-
-
 import { ChevronDown, Check } from "lucide-react";
 import { useState } from "react";
 
@@ -261,22 +43,22 @@ export default function PayBenefitsForm({
   const handleFormSubmit = async (data) => {
     try {
       if (!data) {
-        throw new Error('Form data is required');
+        throw new Error("Form data is required");
       }
 
       // Validate pay range
       if (data.payRange?.min && data.payRange?.max) {
-        const minAmount = parseFloat(data.payRange.min.replace(/[^0-9.]/g, ''));
-        const maxAmount = parseFloat(data.payRange.max.replace(/[^0-9.]/g, ''));
-        
+        const minAmount = parseFloat(data.payRange.min.replace(/[^0-9.]/g, ""));
+        const maxAmount = parseFloat(data.payRange.max.replace(/[^0-9.]/g, ""));
+
         if (minAmount >= maxAmount) {
-          throw new Error('Maximum amount must be greater than minimum amount');
+          throw new Error("Maximum amount must be greater than minimum amount");
         }
       }
 
       await onSubmit(data);
     } catch (error) {
-      console.error('Pay benefits form submission error:', error);
+      console.error("Pay benefits form submission error:", error);
       alert(`Error: ${error.message}`);
     }
   };
@@ -284,51 +66,61 @@ export default function PayBenefitsForm({
   // Exception handling for supplemental pay toggle
   const handleSupplementalPayToggle = (item) => {
     try {
-      if (!getValues || !setValue || typeof getValues !== 'function' || typeof setValue !== 'function') {
-        throw new Error('Form functions not available');
+      if (
+        !getValues ||
+        !setValue ||
+        typeof getValues !== "function" ||
+        typeof setValue !== "function"
+      ) {
+        throw new Error("Form functions not available");
       }
 
       const currentPay = getValues("supplementalPay") || [];
       const newPay = currentPay.includes(item)
         ? currentPay.filter((i) => i !== item)
         : [...currentPay, item];
-      
+
       setValue("supplementalPay", newPay);
     } catch (error) {
-      console.error('Supplemental pay toggle error:', error);
-      alert('Unable to update supplemental pay. Please try again.');
+      console.error("Supplemental pay toggle error:", error);
+      alert("Unable to update supplemental pay. Please try again.");
     }
   };
 
   // Exception handling for benefit toggle
   const handleBenefitToggle = (item) => {
     try {
-      if (!getValues || !setValue || typeof getValues !== 'function' || typeof setValue !== 'function') {
-        throw new Error('Form functions not available');
+      if (
+        !getValues ||
+        !setValue ||
+        typeof getValues !== "function" ||
+        typeof setValue !== "function"
+      ) {
+        throw new Error("Form functions not available");
       }
 
       const currentBenefits = getValues("benefits") || [];
       const newBenefits = currentBenefits.includes(item)
         ? currentBenefits.filter((i) => i !== item)
         : [...currentBenefits, item];
-      
+
       setValue("benefits", newBenefits);
     } catch (error) {
-      console.error('Benefit toggle error:', error);
-      alert('Unable to update benefits. Please try again.');
+      console.error("Benefit toggle error:", error);
+      alert("Unable to update benefits. Please try again.");
     }
   };
 
   // Exception handling for navigation
   const handleNavigation = (formName) => {
     try {
-      if (!setActiveForm || typeof setActiveForm !== 'function') {
-        throw new Error('Navigation function not available');
+      if (!setActiveForm || typeof setActiveForm !== "function") {
+        throw new Error("Navigation function not available");
       }
       setActiveForm(formName);
     } catch (error) {
-      console.error('Navigation error:', error);
-      alert('Unable to navigate. Please try again.');
+      console.error("Navigation error:", error);
+      alert("Unable to navigate. Please try again.");
     }
   };
 
@@ -337,20 +129,20 @@ export default function PayBenefitsForm({
     try {
       setShowMoreBenefits(!showMoreBenefits);
     } catch (error) {
-      console.error('Show more toggle error:', error);
+      console.error("Show more toggle error:", error);
     }
   };
 
   // Exception handling for pay range input
   const handlePayRangeChange = (field, value) => {
     try {
-      if (!setValue || typeof setValue !== 'function') {
-        throw new Error('Form function not available');
+      if (!setValue || typeof setValue !== "function") {
+        throw new Error("Form function not available");
       }
       setValue(`payRange.${field}`, value);
     } catch (error) {
-      console.error('Pay range update error:', error);
-      alert('Unable to update pay range. Please try again.');
+      console.error("Pay range update error:", error);
+      alert("Unable to update pay range. Please try again.");
     }
   };
 
@@ -364,17 +156,24 @@ export default function PayBenefitsForm({
         {/* Header Section */}
         <div className="bg-gradient-to-r from-blue-600 to-indigo-700 px-8 py-6">
           <h2 className="text-2xl font-bold text-white mb-2">Pay & Benefits</h2>
-          <p className="text-blue-100">Define compensation and benefits package</p>
+          <p className="text-blue-100">
+            Define compensation and benefits package
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit(handleFormSubmit)} className="px-8 py-6 space-y-8">
+        <form
+          onSubmit={handleSubmit(handleFormSubmit)}
+          className="px-8 py-6 space-y-8"
+        >
           {/* Pay Section */}
           <div className="space-y-4">
             <label className="block text-lg font-bold text-gray-800">
               Salary Range
             </label>
-            <p className="text-sm text-gray-600 mb-4">Specify the monthly salary range for this position</p>
-            
+            <p className="text-sm text-gray-600 mb-4">
+              Specify the monthly salary range for this position
+            </p>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
@@ -386,8 +185,10 @@ export default function PayBenefitsForm({
                   </span>
                   <input
                     type="text"
-                    value={formData?.payRange?.min || ''}
-                    onChange={(e) => handlePayRangeChange('min', e.target.value)}
+                    value={formData?.payRange?.min || ""}
+                    onChange={(e) =>
+                      handlePayRangeChange("min", e.target.value)
+                    }
                     className="w-full pl-8 pr-4 py-3 border-2 border-gray-200 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-300"
                     placeholder="e.g., 25,000"
                   />
@@ -405,8 +206,10 @@ export default function PayBenefitsForm({
                   </span>
                   <input
                     type="text"
-                    value={formData?.payRange?.max || ''}
-                    onChange={(e) => handlePayRangeChange('max', e.target.value)}
+                    value={formData?.payRange?.max || ""}
+                    onChange={(e) =>
+                      handlePayRangeChange("max", e.target.value)
+                    }
                     className="w-full pl-8 pr-4 py-3 border-2 border-gray-200 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-300"
                     placeholder="e.g., 35,000"
                   />
@@ -421,8 +224,10 @@ export default function PayBenefitsForm({
             <label className="block text-lg font-bold text-gray-800">
               Supplemental Pay
             </label>
-            <p className="text-sm text-gray-600 mb-4">Select additional compensation options (optional)</p>
-            
+            <p className="text-sm text-gray-600 mb-4">
+              Select additional compensation options (optional)
+            </p>
+
             <div className="flex flex-wrap gap-3">
               {supplementalPayOptions?.map((option) => (
                 <button
@@ -453,8 +258,10 @@ export default function PayBenefitsForm({
             <label className="block text-lg font-bold text-gray-800">
               Benefits
             </label>
-            <p className="text-sm text-gray-600 mb-4">Choose benefits to offer with this position (optional)</p>
-            
+            <p className="text-sm text-gray-600 mb-4">
+              Choose benefits to offer with this position (optional)
+            </p>
+
             <div className="flex flex-wrap gap-3">
               {visibleBenefits?.map((option) => (
                 <button
@@ -485,8 +292,8 @@ export default function PayBenefitsForm({
                 onClick={handleShowMoreToggle}
                 className="mt-4 flex items-center text-blue-600 hover:text-blue-700 text-sm font-semibold transition-colors duration-200"
               >
-                {showMoreBenefits 
-                  ? "Show less" 
+                {showMoreBenefits
+                  ? "Show less"
                   : `Show ${benefitOptions.length - 8} more`}
                 <ChevronDown
                   className={`ml-2 w-4 h-4 transition-transform duration-200 ${
