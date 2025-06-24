@@ -1,8 +1,6 @@
-
-
 const FirstFooter = () => {
   return (
-   <footer className="bg-white border-t border-gray-200 py-8 px-4">
+    <footer className="bg-white border-t border-gray-200 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Main Navigation Links */}
         <nav className="mb-8">
@@ -66,7 +64,10 @@ const FirstFooter = () => {
         </nav>
         {/* Post a Job Link */}
         <div className="mb-8">
-          <a href="#" className="text-sm text-gray-700 hover:text-blue-600 hover:underline">
+          <a
+            href="#"
+            className="text-sm text-gray-700 hover:text-blue-600 hover:underline"
+          >
             Post a job
           </a>
         </div>
@@ -85,9 +86,7 @@ const FirstFooter = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default FirstFooter
-
-
+export default FirstFooter;

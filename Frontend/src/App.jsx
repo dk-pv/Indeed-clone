@@ -6,9 +6,11 @@ import SingleEntryAuth from "./pages/SingleEntryAuth";
 import RoleSelection from "./pages/RoleSelection";
 import CompanyReview from "./pages/companyReview";
 import EmployerHome from "./pages/EmployerHome";
-// import Jobpost from "./pages/Jobpost";
 import JobPostSuccessPage from './pages/JobPostSuccessPage'
 import CombinedEmployerPage from "./components/employer/CombinedEmployerPage";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedPublic from "./components/ProtectedPublic";
 
 const router = createBrowserRouter([
 
@@ -22,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/role",
-        element: <RoleSelection />,
+        element:<ProtectedPublic>  <RoleSelection /> </ProtectedPublic>,
       },
       {
         path: "/companyReview",
@@ -33,31 +35,45 @@ const router = createBrowserRouter([
 
   //employer
   {
-    path: "/",
-    element: <RootLayout2 />,
-    children: [
-      {
-        path: "/postJob",
-        element: <EmployerHome />,
-      },
-    ],
-  },
+  path: "/",
+  element: <RootLayout2 />,
+  children: [
+    {
+      path: "/postJob",
+      element: (
+        <ProtectedRoute requiredRole="employer">
+          <EmployerHome />
+        </ProtectedRoute>
+      ),
+    },
+  ],
+},
   {
     path: "/signin",
-    element: <SingleEntryAuth />,
+    element:<ProtectedPublic> <SingleEntryAuth /> </ProtectedPublic> ,
   },
   {
     path:"/success",
     element:<JobPostSuccessPage />
   },
-  {
-    path: "/create-job-post",
-    element:<CombinedEmployerPage/>
-  }
+ {
+  path: "/create-job-post",
+  element: (
+    <ProtectedRoute requiredRole="employer">
+      <CombinedEmployerPage />
+    </ProtectedRoute>
+  )
+}
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return(
+     <AuthProvider>
+      <RouterProvider router={router} />;
+  </AuthProvider>
+  )
+ 
+
 };
 
 export default App;
