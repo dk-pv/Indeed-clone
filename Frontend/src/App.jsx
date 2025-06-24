@@ -11,6 +11,7 @@ import CombinedEmployerPage from "./components/employer/CombinedEmployerPage";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProtectedPublic from "./components/ProtectedPublic";
+import EmployerPost from "./pages/EmployerPost";
 
 const router = createBrowserRouter([
 
@@ -39,13 +40,21 @@ const router = createBrowserRouter([
   element: <RootLayout2 />,
   children: [
     {
-      path: "/postJob",
+      path: "/EmployerHome",
       element: (
         <ProtectedRoute requiredRole="employer">
           <EmployerHome />
         </ProtectedRoute>
       ),
     },
+    {
+      path:'/my-posts',
+      element: (
+        <ProtectedRoute requiredRole="employer">
+         <EmployerPost/>
+        </ProtectedRoute>
+      ),
+    }
   ],
 },
   {

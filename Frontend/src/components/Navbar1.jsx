@@ -151,7 +151,7 @@ const Navbar = () => {
 
               <span className="text-gray-300">|</span>
               <a
-                href="/postJob"
+                href="/EmployerHome"
                 onClick={handleEmployerClick}
                 className="text-sm text-gray-700 hover:text-blue-600"
               >
@@ -168,7 +168,7 @@ const Navbar = () => {
               </a>
               <span className="text-gray-300">|</span>
               <a
-                href="/postJob"
+                href="/EmployerHome"
                 onClick={handleEmployerClick}
                 className="text-sm text-gray-700 hover:text-blue-600"
               >
@@ -265,7 +265,7 @@ const Navbar = () => {
               </a>
             )}
             <a
-              href="/postJob"
+              href="/EmployerHome"
               onClick={(e) => {
                 handleEmployerClick(e);
                 setIsMenuOpen(false);
