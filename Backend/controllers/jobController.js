@@ -67,6 +67,46 @@ export const getAllJobs = asyncHandler(async (req, res) => {
 });
 
 
+export const getEmployerJobs = asyncHandler(async (req, res) => {
+  const jobs = await Job.find({ employer: req.user._id }).sort('-createdAt');
+
+  res.status(200).json({
+    success: true,
+    count: jobs.length,
+    data: jobs
+  });
+});
+
+
+export const updateJob = asyncHandler(async (req, res) => {
+  let job = await Job.findById(req.params.id);
+
+  if (!job) {
+    res.status(404);
+    throw new Error("Job not found");
+  }
+
+  // ✅ Check if the job belongs to the logged-in employer
+  if (job.employer.toString() !== req.user._id.toString()) {
+    res.status(401);
+    throw new Error("Not authorized to update this job");
+  }
+
+  if (req.body.employer) {
+    delete req.body.employer;
+  }
+
+  job = await Job.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    data: job,
+  });
+});
+
 
 export const getAJob = asyncHandler(async (req, res) => {
   const job = await Job.findById(req.params.id)
@@ -83,36 +123,11 @@ export const getAJob = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Update job
-// @route   PUT /api/jobs/:id
-// @access  Private (Employer)
-export const updateJob = asyncHandler(async (req, res) => {
-  let job = await Job.findById(req.params.id);
 
-  if (!job) {
-    res.status(404);
-    throw new Error('Job not found');
-  }
 
-  if (job.employer.toString() !== req.user._id) {
-    res.status(401);
-    throw new Error('Not authorized to update this job');
-  }
 
-  job = await Job.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true
-  });
 
-  res.status(200).json({
-    success: true,
-    data: job
-  });
-});
 
-// @desc    Delete job
-// @route   DELETE /api/jobs/:id
-// @access  Private (Employer)
 export const deleteJob = asyncHandler(async (req, res) => {
   const job = await Job.findById(req.params.id);
 
@@ -134,22 +149,9 @@ export const deleteJob = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Get jobs by employer
-// @route   GET /api/jobs/employer/my-jobs
-// @access  Private (Employer)
-export const getEmployerJobs = asyncHandler(async (req, res) => {
-  const jobs = await Job.find({ employer: req.user._id }).sort('-createdAt');
 
-  res.status(200).json({
-    success: true,
-    count: jobs.length,
-    data: jobs
-  });
-});
 
-// @desc    Update job status
-// @route   PUT /api/jobs/:id/status
-// @access  Private (Employer)
+
 export const updateJobStatus = asyncHandler(async (req, res) => {
   const { status } = req.body;
   let job = await Job.findById(req.params.id);

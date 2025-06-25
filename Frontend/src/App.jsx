@@ -12,6 +12,7 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProtectedPublic from "./components/ProtectedPublic";
 import EmployerPost from "./pages/EmployerPost";
+import EmployerPostEdit from './pages/EmployerPostEdit'
 
 const router = createBrowserRouter([
 
@@ -52,6 +53,14 @@ const router = createBrowserRouter([
       element: (
         <ProtectedRoute requiredRole="employer">
          <EmployerPost/>
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path:'/edit-job/:jobId',
+      element: (
+        <ProtectedRoute requiredRole="employer">
+          <EmployerPostEdit/>
         </ProtectedRoute>
       ),
     }

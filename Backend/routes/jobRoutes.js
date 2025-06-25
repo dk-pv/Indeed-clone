@@ -18,7 +18,7 @@ router.put('/update/:id', verifyToken, verifyEmployer, updateJob);
 router.delete('/delete/:id', verifyToken, verifyEmployer, deleteJob);
 
 router.get('/all', getAllJobs)
-router.get('/', getAJob)
+router.get('/:id', getAJob)
 
 
 
