@@ -52,10 +52,8 @@ export const createJob = asyncHandler(async (req, res) => {
   });
 });
 
-
-
 export const getAllJobs = asyncHandler(async (req, res) => {
-  const jobs = await Job.find({ status: 'published' })
+  const jobs = await Job.find({ status: 'published', isDeleted: false })
     .populate('employer', 'name email companyName')
     .sort('-createdAt');
 
@@ -67,8 +65,9 @@ export const getAllJobs = asyncHandler(async (req, res) => {
 });
 
 
+
 export const getEmployerJobs = asyncHandler(async (req, res) => {
-  const jobs = await Job.find({ employer: req.user._id }).sort('-createdAt');
+  const jobs = await Job.find({ employer: req.user._id , isDeleted : false}).sort('-createdAt');
 
   res.status(200).json({
     success: true,
@@ -108,6 +107,7 @@ export const updateJob = asyncHandler(async (req, res) => {
 });
 
 
+
 export const getAJob = asyncHandler(async (req, res) => {
   const job = await Job.findById(req.params.id)
     .populate('employer', 'name email companyName');
@@ -123,11 +123,6 @@ export const getAJob = asyncHandler(async (req, res) => {
   });
 });
 
-
-
-
-
-
 export const deleteJob = asyncHandler(async (req, res) => {
   const job = await Job.findById(req.params.id);
 
@@ -141,15 +136,14 @@ export const deleteJob = asyncHandler(async (req, res) => {
     throw new Error('Not authorized to delete this job');
   }
 
-  await job.deleteOne();
+  job.isDeleted = true;
+  await job.save();
 
   res.status(200).json({
     success: true,
-    data: {}
+    message: "Job soft-deleted successfully"
   });
 });
-
-
 
 
 export const updateJobStatus = asyncHandler(async (req, res) => {

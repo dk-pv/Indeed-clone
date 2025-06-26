@@ -27,7 +27,7 @@ const SuccessPage = () => {
         </p>
         <div className="space-y-3">
           <Link
-            to="/"
+            to="/EmployerHome"
             className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition"
           >
             Go to Home

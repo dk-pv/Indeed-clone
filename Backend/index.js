@@ -7,6 +7,8 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import jobRoutes from './routes/jobRoutes.js'
 import errorHandler from './middleware/errorHandler.js';
+import locationRoutes from "./routes/locationRoutes.js";
+
 connectDB();
 const app = express();
 app.use(errorHandler);
@@ -21,6 +23,8 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/job", jobRoutes);
+app.use("/api/locations", locationRoutes);
+
 
 
 app.listen(process.env.PORT, () => {

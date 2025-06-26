@@ -139,6 +139,10 @@ const jobSchema = new mongoose.Schema({
     resumeRequired: { type: Boolean },
     contactCandidates: { type: Boolean },
   },
+  isDeleted: {
+  type: Boolean,
+  default: false
+},
 
   status: {
     type: String,
